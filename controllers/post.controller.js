@@ -73,7 +73,10 @@ exports.updatePost = async (req, res) => {
     // Check how to secure this to avoid bambouzleries
 
     try {
-        await Post.findOneAndUpdate(id, req.body)
+        const updatedPost = await Post.findOneAndUpdate(id, req.body)
+        if (!updatedPost) return res.status(404).json({
+            message: "Post not found"
+        })
         res.json({
             message: "Post successfuly updated"
         })
@@ -88,7 +91,10 @@ exports.deletePost = async (req, res) => {
     const { id } = req.params
 
     try {
-        await Post.findOneAndDelete(id)
+        const deletedPost = await Post.findOneAndDelete(id)
+        if (!deletedPost) return res.status(404).json({
+            message: "Post not found"
+        })
         res.json({
             message: "Post successfuly deleted"
         })

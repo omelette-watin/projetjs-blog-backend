@@ -4,6 +4,7 @@ const pkg = require('./package.json')
 const mongoose = require('./config/database')
 
 const authRoutes = require("./routes/auth.routes")
+const postRoutes = require("./routes/post.routes")
 
 require('dotenv').config()
 const port = process.env.PORT || 3001
@@ -26,6 +27,8 @@ server.use(express.urlencoded({ extended: false })) // What does it do ?
 
 // Routes
 server.use('/api/auth', authRoutes)
+server.use('/api/posts', postRoutes)
+
 
 // Infos Route
 server.get("/", (req, res) => {
