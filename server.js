@@ -1,11 +1,18 @@
 const express = require('express')
 const morgan = require('morgan')
 const pkg = require('./package.json')
+const mongoose = require('./config/database')
 
 require('dotenv').config()
 const port = process.env.PORT || 3001
 
 const server = express()
+
+// DB settings
+mongoose.connection.on(
+    "error",
+    console.error.bind(console, "DB Connection Error")
+)
 
 // Settings
 server.set('pkg', pkg)
