@@ -28,14 +28,13 @@ const userSchema = new mongoose.Schema({
 
 // Hash password
 userSchema.statics.hashPassword = async (password) => {
-    const salt1 = await bcrypt.genSalt(10)
-    const salt2 = await bcrypt.genSalt(10)
-    return await bcrypt.hash(salt1, password, salt2)
+    const salt = await bcrypt.genSalt(10)
+    return await bcrypt.hash(password, salt)
 }
 
 // Compare password
-userSchema.statics.comparePassword = async (password, receivedPassword) => {
-    return await bcrypt.compare(password, receivedPassword)
+userSchema.statics.comparePassword = async (receivedPassword, hashedPassword) => {
+    return await bcrypt.compare(receivedPassword, hashedPassword)
 }
 
 // Export User Model

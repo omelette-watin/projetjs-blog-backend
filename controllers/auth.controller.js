@@ -4,8 +4,24 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const SECRET_KEY = process.env.SECRET_KEY
 
+async function userExistByEmail(email) {
+    return User.findOne({email})
+}
+
+async function userExistByUsername(username) {
+    return User.findOne({username})
+}
+
 exports.signUp = async (req, res) => {
     const { username, email, password } = req.body
+
+    if (await userExistByEmail(email)) return res.status(401).json({
+        message: "Email is already used"
+    })
+
+    if (await userExistByUsername(username)) return res.status(401).json({
+        message: "Username is already used"
+    })
 
     const newUser = new User({
         username,
@@ -28,13 +44,17 @@ exports.signUp = async (req, res) => {
 }
 
 exports.logIn = async (req, res) => {
-    const { email, password } = req.body
+    const { email, password, username } = req.body
 
-    const userExist = await User.findOne({ email: email })
+    const userExist = await userExistByEmail(email) ? await userExistByEmail(email) : await userExistByUsername(username)
 
-    const matchPassword = await User.comparePassword(userExist.password, password)
+    if (!userExist) return res.status(401).json({
+        message: "Incorrect email or password"
+    })
 
-    if (!userExist || !matchPassword) return res.status(401).json({
+    const matchPassword = await User.comparePassword(password, userExist.password)
+
+    if (!matchPassword) return res.status(401).json({
         message: "Incorrect email or password"
     })
     
@@ -49,5 +69,4 @@ exports.logIn = async (req, res) => {
         message: 'Successfuly logged in',
         token: token,
     })
-
 }
