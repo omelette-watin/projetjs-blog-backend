@@ -13,5 +13,13 @@
     "eslint-config-prettier": "^8.3.0",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^5.0.0-alpha.8",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.3",
+    "morgan": "^1.10.0"
   }
 }
