@@ -4,7 +4,8 @@
   "description": "RESTful API for Unicorn's Blog",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "author": "Nabil AINAS, Stéphane BAMAN, Mehdi BELLAM, Pierre-Nicolas WATIN-AUGOUARD",
   "license": "ISC",
