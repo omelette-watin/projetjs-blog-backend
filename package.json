@@ -1,0 +1,17 @@
+{
+  "name": "back-end-full-features",
+  "version": "1.0.0",
+  "description": "RESTful API for Unicorn's Blog",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nabil AINAS, Stéphane BAMAN, Mehdi BELLAM, Pierre-Nicolas WATIN-AUGOUARD",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1"
+  }
+}
