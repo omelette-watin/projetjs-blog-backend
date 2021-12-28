@@ -1,8 +1,8 @@
 const Post = require('../models/Post')
 
-exports.findAllPosts = async (req, res) => {
+exports.findAllPublishedPosts = async (req, res) => {
     try {
-        const posts = await Post.find()
+        const posts = await Post.find({ isPublished: true })
         res.json(posts)
     } catch (err) {
         res.status(500).json({
@@ -11,11 +11,11 @@ exports.findAllPosts = async (req, res) => {
     }
 }
 
-exports.findOnePostById = async (req, res) => {
+exports.findOnePublishedPostByPostId = async (req, res) => {
     const { id } = req.params
 
     try {
-        const post = await Post.findById(id)
+        const post = await Post.findOne({ _id: id, isPublished: true })
 
         if (!post) return res.status(404).json({
             message: "Post not found"
@@ -29,17 +29,35 @@ exports.findOnePostById = async (req, res) => {
     }
 }
 
-exports.findPostsByUserId = async (req, res) => {
+exports.findPublishedPostsByUserId = async (req, res) => {
     const { id } = req.params
 
     try {
-        const post = await Post.find({ authorId: id})
+        const posts = await Post.find({ authorId: id, isPublished: true })
 
-        if (!post) return res.status(404).json({
+        if (!posts) return res.status(404).json({
             message: "This user has no posts"
         })
 
-        res.json(post)
+        res.json(posts)
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
+exports.findSavedPostsByUserId = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const posts = await Post.find({ authorId: id, isPublished: false })
+
+        if (!posts) return res.status(404).json({
+            message: "This user has no posts"
+        })
+
+        res.json(posts)
     } catch (err) {
         res.status(500).json({
             message: err.message || "Something went wrong, please try later"
@@ -49,13 +67,12 @@ exports.findPostsByUserId = async (req, res) => {
 
 
 exports.createPost = async (req, res) => {
-    const { title, content, isPublished } = req.body
+    const { title, content } = req.body
 
     try {
         const newPost = new Post({
             title,
             content,
-            isPublished,
             authorId: req.authorId
         })
 
@@ -67,6 +84,27 @@ exports.createPost = async (req, res) => {
         })
     }
 }
+
+exports.publishPost = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const post = await Post.findById(id);
+
+        if (!post) return res.status(404).json({
+            message: "This user has no posts"
+        })
+
+        const publishedPost = Post.updateOne({ _id: id }, { isPublished: true })
+
+        res.json(publishedPost)
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
 
 exports.updatePost = async (req, res) => {
     const { id } = req.params
