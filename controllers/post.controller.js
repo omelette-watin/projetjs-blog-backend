@@ -73,7 +73,7 @@ exports.createPost = async (req, res) => {
         const newPost = new Post({
             title,
             content,
-            authorId: req.authorId
+            authorId: req.userId
         })
 
         const postSaved = await newPost.save()
@@ -95,9 +95,11 @@ exports.publishPost = async (req, res) => {
             message: "This user has no posts"
         })
 
-        const publishedPost = Post.updateOne({ _id: id }, { isPublished: true })
+        const publishedPost = await Post.findOneAndUpdate(id, { isPublished: true })
 
-        res.json(publishedPost)
+        res.json({
+            message: "Post successfuly published"
+        })
     } catch (err) {
         res.status(500).json({
             message: err.message || "Something went wrong, please try later"
