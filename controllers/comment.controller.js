@@ -50,11 +50,13 @@ exports.findCommentsByUserId = async (req, res) => {
 
 exports.createComment = async (req, res) => {
     const { content } = req.body
+    const { id } = req.params
 
     try {
         const newComment = new Comment({
             content,
-            authorId: req.userId
+            authorId: req.userId,
+            postId: id
         })
 
         const commentSaved = await newComment.save()

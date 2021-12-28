@@ -5,6 +5,7 @@ const mongoose = require('./config/database')
 
 const authRoutes = require("./routes/auth.routes")
 const postRoutes = require("./routes/post.routes")
+const commentRoutes = require("./routes/comment.routes")
 
 require('dotenv').config()
 const port = process.env.PORT || 3001
@@ -28,6 +29,7 @@ server.use(express.urlencoded({ extended: false })) // What does it do ?
 // Routes
 server.use('/api/auth', authRoutes)
 server.use('/api/posts', postRoutes)
+server.use('/api/comments', commentRoutes)
 
 
 // Infos Route
