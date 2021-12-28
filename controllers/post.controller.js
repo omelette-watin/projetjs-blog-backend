@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const Comment = require('../models/Comment')
 
 exports.findAllPublishedPosts = async (req, res) => {
     try {
@@ -135,6 +136,7 @@ exports.deletePost = async (req, res) => {
         if (!deletedPost) return res.status(404).json({
             message: "Post not found"
         })
+        await Comment.deleteMany({ postId: id })
         res.json({
             message: "Post successfuly deleted"
         })
