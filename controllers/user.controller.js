@@ -4,7 +4,7 @@ const Comment = require("../models/Comment");
 
 exports.findAllUsers = async (req, res) => {
     try {
-        const users = await User.find()
+        const users = await User.find().select({ password: 0})
         res.json(users)
     }  catch (err) {
         res.status(500).json({
@@ -17,7 +17,7 @@ exports.findOneUserById = async (req, res) => {
     const { id } = req.params
 
     try {
-        const user = await Post.findById(id)
+        const user = await Post.findById(id).select({ password: 0})
 
         if (!user) return res.status(404).json({
             message: "Post not found"
