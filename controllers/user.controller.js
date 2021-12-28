@@ -35,7 +35,7 @@ exports.grantUserAuthorRole = async (req, res) => {
     const { id } = req.params
 
     try {
-        const user = await Post.findOneAndUpdate(
+        const user = await User.findOneAndUpdate(
             { _id: id},
             { role: 'author'}
         )
@@ -58,8 +58,8 @@ exports.grantUserAdminRole = async (req, res) => {
     const { id } = req.params
 
     try {
-        const user = await Post.findOneAndUpdate(
-            { _id: id},
+        const user = await User.findOneAndUpdate(
+            { _id: id },
             { role: 'admin'}
         )
 
@@ -68,7 +68,7 @@ exports.grantUserAdminRole = async (req, res) => {
         })
 
         res.json({
-            message: "User successfuly granted author role"
+            message: "User successfuly granted admin role"
         })
     } catch (err) {
         res.status(500).json({
@@ -82,7 +82,7 @@ exports.deleteUser = async (req, res) => {
     const { id } = req.params
 
     try {
-        const deletedUser = await User.findOneAndDelete(id)
+        const deletedUser = await User.findOneAndDelete({ _id: id})
         if (!deletedUser) return res.status(404).json({
             message: "User not found"
         })
