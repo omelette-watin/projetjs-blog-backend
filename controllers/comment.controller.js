@@ -53,6 +53,12 @@ exports.createComment = async (req, res) => {
     const { id } = req.params
 
     try {
+        const post = await Post.findOne({ _id: id, isPublished: true })
+
+        if (!post) return res.status(404).json({
+            message: "Post not found"
+        })
+
         const newComment = new Comment({
             content,
             authorId: req.userId,
@@ -60,6 +66,7 @@ exports.createComment = async (req, res) => {
         })
 
         const commentSaved = await newComment.save()
+
         res.json({
             message: "Comment successfuly posted"
         })
@@ -75,7 +82,7 @@ exports.updateComment = async (req, res) => {
     // Check how to secure this to avoid bambouzleries
 
     try {
-        const updatedComment = await Comment.findOneAndUpdate(id, { content: req.body.content })
+        const updatedComment = await Comment.findOneAndUpdate({ _id: id }, { content: req.body.content })
         if (!updatedComment) return res.status(404).json({
             message: "Comment not found"
         })

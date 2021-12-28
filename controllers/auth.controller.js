@@ -13,7 +13,7 @@ async function userExistByUsername(username) {
 }
 
 exports.signUp = async (req, res) => {
-    const { username, email, password, role } = req.body
+    const { username, email, password } = req.body
 
     if (await userExistByEmail(email)) return res.status(401).json({
         message: "Email is already used"
@@ -26,7 +26,6 @@ exports.signUp = async (req, res) => {
     const newUser = new User({
         username,
         email,
-        role,
         password: await User.hashPassword(password)
     })
 

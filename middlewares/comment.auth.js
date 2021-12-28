@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Post = require('../models/Post')
+const Comment = require('../models/Comment')
 
 require('dotenv').config()
 const SECRET_KEY = process.env.SECRET_KEY
 
-exports.canCreatePost = async (req, res, next) => {
+exports.canCreateComment = async (req, res, next) => {
     try {
         const token = req.headers["x-access-token"]
 
@@ -21,13 +22,7 @@ exports.canCreatePost = async (req, res, next) => {
             message: "No user found"
         })
 
-        if (user.role === 'author' || user.role === 'admin') {
-            next()
-        } else {
-            return res.status(401).json({
-                message: "Unauthorized"
-            })
-        }
+        next()
 
     } catch (err) {
         res.status(500).json({
@@ -36,7 +31,7 @@ exports.canCreatePost = async (req, res, next) => {
     }
 }
 
-exports.canUpdateThisPost = async (req, res, next) => {
+exports.canUpdateThisComment = async (req, res, next) => {
     try {
         const token = req.headers["x-access-token"]
         const { id } = req.params
@@ -47,13 +42,13 @@ exports.canUpdateThisPost = async (req, res, next) => {
 
         const userId = jwt.verify(token, SECRET_KEY).id
 
-        const post = await Post.findById(id)
+        const comment = await Comment.findById(id)
 
-        if (!post) return res.status(404).json({
-            message: "Post not found"
+        if (!comment) return res.status(404).json({
+            message: "Comment not found"
         })
 
-        if (post.authorId !== userId) res.status(401).json({
+        if (comment.authorId !== userId) res.status(401).json({
             message: "Unauthorized"
         })
 
@@ -65,30 +60,7 @@ exports.canUpdateThisPost = async (req, res, next) => {
     }
 }
 
-exports.canSeeHisSavedPosts = async (req, res, next) => {
-    try {
-        const token = req.headers["x-access-token"]
-        const { id } = req.params
-
-        if (!token) return res.status(403).json({
-            message: "No token provided"
-        })
-
-        const userId = jwt.verify(token, SECRET_KEY).id
-
-        if (userId !== id) res.status(401).json({
-            message: "Unauthorized"
-        })
-
-        next()
-    }  catch (err) {
-        res.status(500).json({
-            message: err.message || "Something went wrong, please try later"
-        })
-    }
-}
-
-exports.canDeleteThisPost = async (req, res, next) => {
+exports.canDeleteThisComment = async (req, res, next) => {
     try {
         const token = req.headers["x-access-token"]
         const { id } = req.params
@@ -100,13 +72,19 @@ exports.canDeleteThisPost = async (req, res, next) => {
         const userId = jwt.verify(token, SECRET_KEY).id
 
         const user = await User.findById(userId)
-        const post = await Post.findById(id)
+        const comment = await Comment.findById(id)
+
+        if (!comment) return res.status(404).json({
+            message: "Comment not found"
+        })
+
+        const post = await Post.findById(comment.postId)
 
         if (!post) return res.status(404).json({
             message: "Post not found"
         })
 
-        if (post.authorId !== userId && user.role !== 'admin') res.status(401).json({
+        if (comment.authorId !== userId && user.role !== 'admin' && post.authorId !== userId) res.status(401).json({
             message: "Unauthorized"
         })
 

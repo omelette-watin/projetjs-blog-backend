@@ -96,7 +96,7 @@ exports.publishPost = async (req, res) => {
             message: "This user has no posts"
         })
 
-        const publishedPost = await Post.findOneAndUpdate(id, { isPublished: true })
+        const publishedPost = await Post.findOneAndUpdate({ _id: id }, { isPublished: true })
 
         res.json({
             message: "Post successfuly published"
@@ -114,7 +114,13 @@ exports.updatePost = async (req, res) => {
     // Check how to secure this to avoid bambouzleries
 
     try {
-        const updatedPost = await Post.findOneAndUpdate(id, req.body)
+        const updatedPost = await Post.findOneAndUpdate(
+            { _id: id },
+            {
+                title: req.body.title,
+                content: req.body.content
+            }
+        )
         if (!updatedPost) return res.status(404).json({
             message: "Post not found"
         })
