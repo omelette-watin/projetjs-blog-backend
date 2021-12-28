@@ -111,14 +111,15 @@ exports.publishPost = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
     const { id } = req.params
+    const { title, content } = req.body
     // Check how to secure this to avoid bambouzleries
 
     try {
         const updatedPost = await Post.findOneAndUpdate(
             { _id: id },
             {
-                title: req.body.title,
-                content: req.body.content
+                title,
+                content
             }
         )
         if (!updatedPost) return res.status(404).json({
