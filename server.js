@@ -2,6 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const pkg = require('./package.json')
 const mongoose = require('./config/database')
+const cors = require('cors')
 
 const authRoutes = require("./routes/auth.routes")
 const postRoutes = require("./routes/post.routes")
@@ -26,6 +27,7 @@ server.set('pkg', pkg)
 server.use(morgan('dev'))
 server.use(express.json())
 server.use(express.urlencoded({ extended: false })) // What does it do ?
+server.use(cors())
 
 // Routes
 server.use('/api/auth', authRoutes)
