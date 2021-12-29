@@ -21,13 +21,11 @@ exports.canCreatePost = async (req, res, next) => {
             message: "No user found"
         })
 
-        if (user.role === 'author' || user.role === 'admin') {
-            next()
-        } else {
-            return res.status(401).json({
-                message: "Unauthorized"
-            })
-        }
+        if (!(user.role === 'author' || user.role === 'admin' && user.isActive === true))  return res.status(401).json({
+            message: "Unauthorized"
+        })
+        next()
+
 
     } catch (err) {
         res.status(500).json({
@@ -48,12 +46,17 @@ exports.canUpdateThisPost = async (req, res, next) => {
         const userId = jwt.verify(token, SECRET_KEY).id
 
         const post = await Post.findById(id)
+        const user = await User.findById(userId)
+
+        if (!user) return res.status(404).json({
+            message: "No user found"
+        })
 
         if (!post) return res.status(404).json({
             message: "Post not found"
         })
 
-        if (post.authorId !== userId) res.status(401).json({
+        if (!(post.authorId === userId && user.isActive === true)) res.status(401).json({
             message: "Unauthorized"
         })
 
@@ -76,7 +79,7 @@ exports.canSeeHisSavedPosts = async (req, res, next) => {
 
         const userId = jwt.verify(token, SECRET_KEY).id
 
-        if (userId !== id) res.status(401).json({
+        if (!(userId === id)) res.status(401).json({
             message: "Unauthorized"
         })
 
@@ -106,7 +109,7 @@ exports.canDeleteThisPost = async (req, res, next) => {
             message: "Post not found"
         })
 
-        if (post.authorId !== userId && user.role !== 'admin') res.status(401).json({
+        if (!(post.authorId === userId && user.role === 'admin' && user.isActive === true)) res.status(401).json({
             message: "Unauthorized"
         })
 

@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
-const Post = require("../models/Post");
 
 require('dotenv').config()
 const SECRET_KEY = process.env.SECRET_KEY
@@ -8,6 +7,7 @@ const SECRET_KEY = process.env.SECRET_KEY
 exports.canChangeRights = async (req, res, next) => {
     try {
         const token = req.headers["x-access-token"]
+        const { id } = req.params
 
         if (!token) return res.status(403).json({
             message: "No token provided"
@@ -16,8 +16,9 @@ exports.canChangeRights = async (req, res, next) => {
         const userId = jwt.verify(token, SECRET_KEY).id
 
         const user = await User.findById(userId)
+        const toBeModifiedUser = await User.findById(id)
 
-        if (user.role !== 'admin') res.status(401).json({
+        if (user.role !== 'admin' && toBeModifiedUser.role !== 'admin') res.status(401).json({
             message: "Unauthorized"
         })
 
@@ -47,7 +48,7 @@ exports.canDeleteThisUser = async (req, res, next) => {
             message: "User not found"
         })
 
-        if (toBeDeletedUser._id !== userId && user.role !== 'admin') res.status(401).json({
+        if (!(toBeDeletedUser.id === userId || (user.role === 'admin' && toBeDeletedUser.role !== 'admin'))) return res.status(401).json({
             message: "Unauthorized"
         })
 

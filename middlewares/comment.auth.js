@@ -22,8 +22,11 @@ exports.canCreateComment = async (req, res, next) => {
             message: "No user found"
         })
 
-        next()
+        if (!(user.isActive === true)) res.status(401).json({
+            message: "Unauthorized"
+        })
 
+        next()
     } catch (err) {
         res.status(500).json({
             message: err.message || "Something went wrong, please try later"
@@ -43,12 +46,18 @@ exports.canUpdateThisComment = async (req, res, next) => {
         const userId = jwt.verify(token, SECRET_KEY).id
 
         const comment = await Comment.findById(id)
+        const user = await User.findById(userId)
+
 
         if (!comment) return res.status(404).json({
             message: "Comment not found"
         })
 
-        if (comment.authorId !== userId) res.status(401).json({
+        if (!user) return res.status(404).json({
+            message: "User not found"
+        })
+
+        if (!(comment.authorId === userId && user.isActive === true)) res.status(401).json({
             message: "Unauthorized"
         })
 
@@ -84,7 +93,7 @@ exports.canDeleteThisComment = async (req, res, next) => {
             message: "Post not found"
         })
 
-        if (comment.authorId !== userId && user.role !== 'admin' && post.authorId !== userId) res.status(401).json({
+        if (!(comment.authorId === userId || user.role === 'admin' || post.authorId === userId && user.isActive === true)) res.status(401).json({
             message: "Unauthorized"
         })
 
