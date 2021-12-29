@@ -97,3 +97,43 @@ exports.deleteUser = async (req, res) => {
         })
     }
 }
+
+exports.deactivateUser = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const user = await User.findOneAndUpdate({ _id: id }, { isActive: false })
+
+        if (!user) return res.status(404).json({
+            message: "User not found"
+        })
+
+        res.json({
+            message: "User successfuly deactivated"
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
+exports.activateUser = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const user = await User.findOneAndUpdate({ _id: id }, { isActive: true })
+
+        if (!user) return res.status(404).json({
+            message: "User not found"
+        })
+
+        res.json({
+            message: "User successfuly activated"
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}

@@ -5,7 +5,7 @@ const Post = require("../models/Post");
 require('dotenv').config()
 const SECRET_KEY = process.env.SECRET_KEY
 
-exports.canGiveRole = async (req, res, next) => {
+exports.canChangeRights = async (req, res, next) => {
     try {
         const token = req.headers["x-access-token"]
 

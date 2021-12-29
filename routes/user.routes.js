@@ -8,9 +8,13 @@ router.get("/", userCtrl.findAllUsers)
 
 router.get("/:id", userCtrl.findOneUserById)
 
-router.put("/author/:id", [auth.canGiveRole], userCtrl.grantUserAuthorRole)
+router.put("/author/:id", [auth.canChangeRights], userCtrl.grantUserAuthorRole)
 
-router.put("/admin/:id", [auth.canGiveRole], userCtrl.grantUserAdminRole)
+router.put("/admin/:id", [auth.canChangeRights], userCtrl.grantUserAdminRole)
+
+router.put("/deactivate/:id", [auth.canChangeRights], userCtrl.deactivateUser)
+
+router.put("/activate/:id", [auth.canChangeRights], userCtrl.activateUser)
 
 router.delete("/:id", [auth.canDeleteThisUser], userCtrl.deleteUser)
 

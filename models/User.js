@@ -23,6 +23,12 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
         default: "reader",
+    },
+    isActive: {
+        type: Boolean,
+        required: true,
+        trim: true,
+        default: true,
     }
 })
 
