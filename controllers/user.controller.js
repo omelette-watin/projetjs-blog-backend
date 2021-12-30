@@ -13,6 +13,39 @@ exports.findAllUsers = async (req, res) => {
     }
 }
 
+exports.findAllReaders = async (req, res) => {
+    try {
+        const users = await User.find({ role: "reader" }).select({ password: 0})
+        res.json(users)
+    }  catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
+exports.findAllAuthors = async (req, res) => {
+    try {
+        const users = await User.find({ role: "author" }).select({ password: 0})
+        res.json(users)
+    }  catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
+exports.findAllAdmins = async (req, res) => {
+    try {
+        const users = await User.find({ role: "admin" }).select({ password: 0})
+        res.json(users)
+    }  catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
 exports.findOneUserById = async (req, res) => {
     const { id } = req.params
 
