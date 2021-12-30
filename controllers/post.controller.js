@@ -12,6 +12,18 @@ exports.findAllPublishedPosts = async (req, res) => {
     }
 }
 
+exports.findAllPublishedPostsIds = async (req, res) => {
+    try {
+        const posts = await Post.find({ isPublished: true }).select({ _id: 1})
+        res.json(posts)
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
+
 exports.findOnePublishedPostByPostId = async (req, res) => {
     const { id } = req.params
 

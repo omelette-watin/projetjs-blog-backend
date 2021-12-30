@@ -6,6 +6,8 @@ const router = express.Router()
 
 router.get('/', postCtrl.findAllPublishedPosts)
 
+router.get('/ids', postCtrl.findAllPublishedPostsIds)
+
 router.get('/:id', postCtrl.findOnePublishedPostByPostId)
 
 router.get('/user/:id', postCtrl.findPublishedPostsByUserId)
