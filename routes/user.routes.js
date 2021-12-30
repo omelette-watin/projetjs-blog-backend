@@ -6,6 +6,12 @@ const router = express.Router()
 
 router.get("/", userCtrl.findAllUsers)
 
+router.get("/readers", userCtrl.findAllReaders)
+
+router.get("/authors", userCtrl.findAllAuthors)
+
+router.get("/admins", userCtrl.findAllAdmins)
+
 router.get("/:id", userCtrl.findOneUserById)
 
 router.put("/author/:id", [auth.canChangeRights], userCtrl.grantUserAuthorRole)
