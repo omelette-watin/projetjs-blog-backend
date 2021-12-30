@@ -2,6 +2,15 @@ const User = require('../models/User')
 const Post = require("../models/Post");
 const Comment = require("../models/Comment");
 
+const userExistByEmail= async (email) => {
+    return User.exists({email})
+}
+
+const userExistByUsername = async (username) => {
+    return User.exists({username})
+}
+
+
 exports.findAllUsers = async (req, res) => {
     try {
         const users = await User.find().select({ password: 0})
@@ -108,6 +117,51 @@ exports.grantUserAdminRole = async (req, res) => {
             message: err.message || "Something went wrong, please try later"
         })
     }
+}
+
+exports.updateUser = async (req, res) => {
+    const { id } = req.params
+    const { username, email, password } = req.body
+
+    try {
+
+        const user = await User.findById(id)
+
+        if (!user) return res.status(404).json({
+            message: "User not found"
+        })
+
+        if (email && !email.includes("@")) return res.status(400).json({
+            message: "Email is invalid"
+        })
+
+        if (await userExistByEmail(email) && user.email !== email) return res.status(401).json({
+            message: "Email already used"
+        })
+
+        if (await userExistByUsername(username) && user.username !== username) return res.status(401).json({
+            message: "Username already used"
+        })
+
+        await User.updateOne(
+            { _id: id },
+            {
+                email: email || user.email,
+                password: password ? await User.hashPassword(password) : user.password,
+                username: username || user.username
+            }
+        )
+
+        res.json({
+            message: "User successfuly updated"
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+
 }
 
 
