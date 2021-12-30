@@ -74,7 +74,8 @@ exports.createPost = async (req, res) => {
         const newPost = new Post({
             title,
             content,
-            authorId: req.userId
+            authorId: req.userId,
+            authorName: req.username
         })
 
         const postSaved = await newPost.save()
@@ -112,7 +113,6 @@ exports.publishPost = async (req, res) => {
 exports.updatePost = async (req, res) => {
     const { id } = req.params
     const { title, content } = req.body
-    // Check how to secure this to avoid bambouzleries
 
     try {
         const updatedPost = await Post.findOneAndUpdate(

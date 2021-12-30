@@ -26,6 +26,7 @@ exports.canCreateComment = async (req, res, next) => {
             message: "Unauthorized"
         })
 
+        req.username = user.username
         next()
     } catch (err) {
         res.status(500).json({

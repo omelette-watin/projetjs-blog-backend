@@ -62,6 +62,7 @@ exports.createComment = async (req, res) => {
         const newComment = new Comment({
             content,
             authorId: req.userId,
+            authorName: req.username,
             postId: id
         })
 
@@ -79,10 +80,11 @@ exports.createComment = async (req, res) => {
 
 exports.updateComment = async (req, res) => {
     const { id } = req.params
+    const { content } = req.body
     // Check how to secure this to avoid bambouzleries
 
     try {
-        const updatedComment = await Comment.findOneAndUpdate({ _id: id }, { content: req.body.content })
+        const updatedComment = await Comment.findOneAndUpdate({ _id: id }, { content })
         if (!updatedComment) return res.status(404).json({
             message: "Comment not found"
         })

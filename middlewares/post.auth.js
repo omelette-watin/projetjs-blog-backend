@@ -17,6 +17,8 @@ exports.canCreatePost = async (req, res, next) => {
 
         const user = await User.findById(req.userId)
 
+
+
         if (!user) return res.status(404).json({
             message: "No user found"
         })
@@ -24,9 +26,9 @@ exports.canCreatePost = async (req, res, next) => {
         if (!(user.role === 'author' || user.role === 'admin' && user.isActive === true))  return res.status(401).json({
             message: "Unauthorized"
         })
+        req.username = user.username
+
         next()
-
-
     } catch (err) {
         res.status(500).json({
             message: err.message || "Something went wrong, please try later"
