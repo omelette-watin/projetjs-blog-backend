@@ -14,6 +14,8 @@ router.get("/admins", userCtrl.findAllAdmins)
 
 router.get("/:id", userCtrl.findOneUserById)
 
+router.put("/:id", userCtrl.updateUser)
+
 router.put("/author/:id", [auth.canChangeRights], userCtrl.grantUserAuthorRole)
 
 router.put("/admin/:id", [auth.canChangeRights], userCtrl.grantUserAdminRole)
