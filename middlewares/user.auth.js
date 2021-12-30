@@ -5,10 +5,10 @@ require('dotenv').config()
 const SECRET_KEY = process.env.SECRET_KEY
 
 exports.canChangeRights = async (req, res, next) => {
-    try {
-        const token = req.headers["x-access-token"]
-        const { id } = req.params
+    const token = req.headers["x-access-token"]
+    const { id } = req.params
 
+    try {
         if (!token) return res.status(403).json({
             message: "No token provided"
         })
@@ -30,10 +30,36 @@ exports.canChangeRights = async (req, res, next) => {
     }
 }
 
-exports.canDeleteThisUser = async (req, res, next) => {
+exports.canUpdateThisUser =  async (req, res, next) => {
+    const token = req.headers["x-access-token"]
+    const { id } = req.params
+
     try {
-        const token = req.headers["x-access-token"]
-        const { id } = req.params
+
+
+        if (!token) return res.status(403).json({
+            message: "No token provided"
+        })
+
+        const userId = jwt.verify(token, SECRET_KEY).id
+
+        if (id !== userId) return res.status(401).json({
+            message: "Unauthorized"
+        })
+
+        next()
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
+exports.canDeleteThisUser = async (req, res, next) => {
+    const token = req.headers["x-access-token"]
+    const { id } = req.params
+
+    try {
 
         if (!token) return res.status(403).json({
             message: "No token provided"
