@@ -95,3 +95,28 @@ exports.logIn = async (req, res) => {
         })
     }
 }
+
+exports.authUser = async (req, res) => {
+    const token = req.headers["x-access-token"]
+
+    try {
+
+        if (!token) return res.status(403).json({
+            message: "No token provided"
+        })
+
+        const userId = jwt.verify(token, SECRET_KEY).id
+
+        const user = await User.findById(userId).select({ password: 0 })
+
+        if (!user) return res.status(404).json({
+            message: "User not found"
+        })
+
+        return res.json(user)
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
