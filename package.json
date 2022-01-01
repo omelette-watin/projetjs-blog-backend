@@ -1,5 +1,5 @@
 {
-  "name": "back-end-full-features",
+  "name": "projetjs-blog-back-end",
   "version": "1.0.0",
   "description": "RESTful API for Unicorn's Blog",
   "main": "server.js",

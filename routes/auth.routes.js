@@ -7,6 +7,6 @@ router.post("/signup", authCtrl.signUp)
 
 router.post("/login", authCtrl.logIn)
 
-router.get("/authUser", authCtrl.authUser)
+router.get("/verifytoken", authCtrl.verifyToken)
 
 module.exports = router
