@@ -70,7 +70,6 @@ exports.logIn = async (req, res) => {
       return res.status(400).json({
         message: "Veuillez remplir tous les champs",
       })
-    console.log(username, password)
     const userExist = (await userExistByEmail(username))
       ? await userExistByEmail(username)
       : await userExistByUsername(username)
@@ -80,7 +79,6 @@ exports.logIn = async (req, res) => {
         message: "Identifiants invalides",
       })
 
-    console.log(userExist)
     const matchPassword = await User.comparePassword(
       password,
       userExist.password
