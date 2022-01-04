@@ -23,17 +23,17 @@ exports.signUp = async (req, res) => {
 
     if (!email.includes("@"))
       return res.status(400).json({
-        message: "Email is invalid",
+        message: "L'adresse e-mail est invalide",
       })
 
     if (await userExistByEmail(email))
       return res.status(401).json({
-        message: "Email already used",
+        message: "L'adresse e-mail est déjà utilisée",
       })
 
     if (await userExistByUsername(username))
       return res.status(401).json({
-        message: "Username already used",
+        message: "Le nom d'utilisateur est déjà utilisée",
       })
 
     const newUser = new User({
