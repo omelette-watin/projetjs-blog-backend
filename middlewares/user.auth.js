@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
-require('dotenv').config()
-const SECRET_KEY = process.env.SECRET_KEY
+
+const SECRET_KEY = process.env.SECRET_KEY || 'mySecretKey'
 
 exports.canChangeRights = async (req, res, next) => {
     const token = req.headers["x-access-token"]

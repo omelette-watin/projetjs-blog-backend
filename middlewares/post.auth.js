@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Post = require('../models/Post')
 
-require('dotenv').config()
-const SECRET_KEY = process.env.SECRET_KEY
+
+const SECRET_KEY = process.env.SECRET_KEY || 'mySecretKey'
 
 exports.canCreatePost = async (req, res, next) => {
     try {

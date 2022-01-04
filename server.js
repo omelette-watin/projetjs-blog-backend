@@ -9,8 +9,8 @@ const postRoutes = require("./routes/post.routes")
 const commentRoutes = require("./routes/comment.routes")
 const userRoutes = require("./routes/user.routes")
 
-require('dotenv').config()
-const port = process.env.PORT || 3001
+
+const port = process.env.PORT || 8080
 
 const server = express()
 

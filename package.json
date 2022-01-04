@@ -18,7 +18,6 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
     "express": "^5.0.0-alpha.8",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.3",

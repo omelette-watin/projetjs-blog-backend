@@ -3,8 +3,8 @@ const User = require('../models/User')
 const Post = require('../models/Post')
 const Comment = require('../models/Comment')
 
-require('dotenv').config()
-const SECRET_KEY = process.env.SECRET_KEY
+
+const SECRET_KEY = process.env.SECRET_KEY || 'mySecretKey'
 
 exports.canCreateComment = async (req, res, next) => {
     try {

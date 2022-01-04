@@ -1,8 +1,13 @@
 const mongoose = require('mongoose')
 
-require('dotenv').config()
-const mongoDb = process.env.DB || 'mongodb://localhost/blog'
+const dbPrefix = process.env.DB_PREFIX || 'mongodb:/'
+const dbUsername = process.env.DB_USERNAME || ''
+const dbPassword = process.env.DB_PASSWORD || ''
+const dbAdress = process.env.DB_ADDRESS || '/localhost/blog'
 
+const mongoDb = dbPrefix + dbUsername + dbPassword + dbAdress
+
+console.log(mongoDb)
 mongoose.connect(mongoDb)
 mongoose.Promise = global.Promise
 
