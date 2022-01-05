@@ -3,8 +3,8 @@ const Post = require("../models/Post");
 
 exports.findAllComments = async (req, res) => {
     try {
-        const comment = await Comment.find()
-        res.json(comment)
+        const comments = await Comment.find()
+        return res.json(comments)
     } catch (err) {
         res.status(500).json({
             message: err.message || "Something went wrong, please try later"

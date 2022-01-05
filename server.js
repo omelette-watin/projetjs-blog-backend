@@ -8,7 +8,7 @@ const authRoutes = require("./routes/auth.routes")
 const postRoutes = require("./routes/post.routes")
 const commentRoutes = require("./routes/comment.routes")
 const userRoutes = require("./routes/user.routes")
-
+const reportRoutes = require("./dev/reports/report.routes")
 
 const port = process.env.PORT || 8080
 
@@ -36,6 +36,7 @@ server.use('/api/auth', authRoutes)
 server.use('/api/posts', postRoutes)
 server.use('/api/comments', commentRoutes)
 server.use('/api/users', userRoutes)
+server.use('/api/reports', reportRoutes)
 
 
 // Infos Route
