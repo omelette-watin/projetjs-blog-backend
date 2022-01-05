@@ -27,7 +27,9 @@ server.set('pkg', pkg)
 server.use(morgan('dev'))
 server.use(express.json())
 server.use(express.urlencoded({ extended: false })) // What does it do ?
-server.use(cors())
+server.use(cors({
+    origin: '*'
+}))
 
 // Routes
 server.use('/api/auth', authRoutes)
