@@ -6,6 +6,8 @@ const router = express.Router()
 
 router.get("/", userCtrl.findAllUsers)
 
+router.get("/count", userCtrl.countAllUsers)
+
 router.get("/readers", userCtrl.findAllReaders)
 
 router.get("/authors", userCtrl.findAllAuthors)

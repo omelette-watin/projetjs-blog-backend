@@ -10,6 +10,16 @@ const userExistByUsername = async (username) => {
     return User.exists({username})
 }
 
+exports.countAllUsers = async (req, res) => {
+    try {
+        const numberUsers = await User.countDocuments({})
+        res.json(numberUsers)
+    }  catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
 
 exports.findAllUsers = async (req, res) => {
     try {
