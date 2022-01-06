@@ -7,12 +7,12 @@ const commentSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    publicationDate: {
-        type: Date,
-        required: true,
-        default: now()
-    },
     authorId: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    authorName: {
         type: String,
         required: true,
         trim: true,
@@ -22,10 +22,24 @@ const commentSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    authorName: {
-        type: String,
+    publicationDate: {
+        type: Date,
         required: true,
-        trim: true,
+        default: now()
+    },
+    modificationDate: {
+        type: Date,
+        required: false,
+    },
+    thumbsUp: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
+    thumbsDown: {
+        type: Number,
+        required: true,
+        default: 0,
     }
 })
 

@@ -13,11 +13,6 @@ const postSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    publicationDate: {
-        type: Date,
-        required: true,
-        default: now()
-    },
     isPublished: {
         type: Boolean,
         required: true,
@@ -32,7 +27,37 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+    },
+    creationDate: {
+        type: Date,
+        required: true,
+        default: now()
+    },
+    publicationDate: {
+        type: Date,
+        required: false,
+    },
+    modificationDate: {
+        type: Date,
+        required: false,
+    },
+    views: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
+    thumbsUp: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
+    thumbsDown: {
+        type: Number,
+        required: true,
+        default: 0,
     }
+
+
 })
 
 module.exports = mongoose.model('Post', postSchema)
