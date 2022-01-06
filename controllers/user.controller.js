@@ -21,6 +21,28 @@ exports.countAllUsers = async (req, res) => {
     }
 }
 
+exports.countAuthors = async (req, res) => {
+    try {
+        const numberUsers = await User.countDocuments({ role: "author"})
+        res.json(numberUsers)
+    }  catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
+exports.countAdmins = async (req, res) => {
+    try {
+        const numberUsers = await User.countDocuments({ role: "admin"})
+        res.json(numberUsers)
+    }  catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+
 exports.findAllUsers = async (req, res) => {
     try {
         const users = await User.find().select({ password: 0})

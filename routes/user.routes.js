@@ -8,6 +8,10 @@ router.get("/", userCtrl.findAllUsers)
 
 router.get("/count", userCtrl.countAllUsers)
 
+router.get("/authors/count", userCtrl.countAuthors)
+
+router.get("/admins/count", userCtrl.countAdmins)
+
 router.get("/readers", userCtrl.findAllReaders)
 
 router.get("/authors", userCtrl.findAllAuthors)
