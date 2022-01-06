@@ -8,7 +8,7 @@ const authRoutes = require("./routes/auth.routes")
 const postRoutes = require("./routes/post.routes")
 const commentRoutes = require("./routes/comment.routes")
 const userRoutes = require("./routes/user.routes")
-const reportRoutes = require("./dev/reports/report.routes")
+const reportRoutes = require("./routes/report.routes")
 
 const port = process.env.PORT || 8080
 

@@ -1,5 +1,5 @@
 const express = require("express")
-const repCtrl = require("./report.controller")
+const repCtrl = require("../controllers/report.controller")
 
 const router = express.Router()
 

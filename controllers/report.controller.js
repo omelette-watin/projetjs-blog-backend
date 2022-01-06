@@ -1,4 +1,4 @@
-const Report = require('./Report')
+const Report = require('../models/Report')
 
 exports.findAllReports = async (req, res) => {
     try {
