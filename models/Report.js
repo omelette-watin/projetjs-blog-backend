@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const { now } = require('mongoose')
 
 const reportSchema  = new mongoose.Schema({
     grade: {
@@ -15,7 +14,6 @@ const reportSchema  = new mongoose.Schema({
     publicationDate: {
         type: Date,
         required: true,
-        default: now(),
     }
 })
 

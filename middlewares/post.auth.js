@@ -122,3 +122,20 @@ exports.canDeleteThisPost = async (req, res, next) => {
         })
     }
 }
+
+exports.canAddView = async (req, res, next) => {
+    const origin = req.get('origin')
+    console.log(origin)
+    try {
+        if (origin !== "https://unicornsblog.vercel.app") return res.status(401).json({
+            message: "Unauthorized"
+        })
+
+        next()
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || "Something went wrong, please try later"
+        })
+    }
+}
+

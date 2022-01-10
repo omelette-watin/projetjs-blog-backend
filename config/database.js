@@ -7,7 +7,6 @@ const dbAdress = process.env.DB_ADDRESS || '/localhost/blog'
 
 const mongoDb = dbPrefix + dbUsername + dbPassword + dbAdress
 
-console.log(mongoDb)
 mongoose.connect(mongoDb)
 mongoose.Promise = global.Promise
 

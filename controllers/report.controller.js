@@ -1,4 +1,5 @@
 const Report = require('../models/Report')
+const {now} = require("mongoose")
 
 exports.findAllReports = async (req, res) => {
     try {
@@ -18,11 +19,13 @@ exports.createReport = async (req, res) => {
         const newReport = message
             ? new Report({
                 grade,
-                message
+                message,
+                publicationDate: now()
             })
             : new Report({
-                grade
-            })
+                grade,
+                publicationDate: now()
+          })
 
         const reportSaved = await newReport.save()
         return res.json({

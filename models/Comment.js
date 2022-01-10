@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const { now } = require('mongoose')
 
 const commentSchema = new mongoose.Schema({
     content: {
@@ -25,21 +24,10 @@ const commentSchema = new mongoose.Schema({
     publicationDate: {
         type: Date,
         required: true,
-        default: now()
     },
     modificationDate: {
         type: Date,
         required: false,
-    },
-    thumbsUp: {
-        type: Number,
-        required: true,
-        default: 0,
-    },
-    thumbsDown: {
-        type: Number,
-        required: true,
-        default: 0,
     }
 })
 

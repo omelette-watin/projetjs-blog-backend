@@ -31,7 +31,7 @@ const postSchema = new mongoose.Schema({
     creationDate: {
         type: Date,
         required: true,
-        default: now()
+        trim: true
     },
     publicationDate: {
         type: Date,
@@ -45,19 +45,7 @@ const postSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0,
-    },
-    thumbsUp: {
-        type: Number,
-        required: true,
-        default: 0,
-    },
-    thumbsDown: {
-        type: Number,
-        required: true,
-        default: 0,
     }
-
-
 })
 
 module.exports = mongoose.model('Post', postSchema)

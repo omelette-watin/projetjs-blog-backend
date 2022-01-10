@@ -16,7 +16,11 @@ router.get('/saved/:id', [auth.canSeeHisSavedPosts], postCtrl.findSavedPostsByUs
 
 router.post('/', [auth.canCreatePost], postCtrl.createPost)
 
+router.post('/publish', [auth.canCreatePost], postCtrl.createAndPublishPost)
+
 router.post('/:id', [auth.canUpdateThisPost], postCtrl.publishPost)
+
+router.put('/views/:id', [auth.canAddView] ,postCtrl.addView)
 
 router.put('/:id', [auth.canUpdateThisPost], postCtrl.updatePost)
 
